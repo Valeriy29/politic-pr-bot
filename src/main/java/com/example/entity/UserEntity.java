@@ -3,6 +3,7 @@ package com.example.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.checkerframework.checker.units.qual.C;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,6 +32,9 @@ public class UserEntity {
     @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "answered_region")
     private Boolean answeredRegion;
 
@@ -39,6 +43,9 @@ public class UserEntity {
 
     @Column(name = "input_description")
     private Boolean inputDescription;
+
+    @Column(name = "send_doc")
+    private Boolean sendDoc;
 
     @Column(name = "section")
     private String section;

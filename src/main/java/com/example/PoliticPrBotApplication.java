@@ -24,12 +24,6 @@ public class PoliticPrBotApplication implements CommandLineRunner {
 	@Autowired
 	private BotController botController;
 
-	@Autowired
-    private SaveServiceTest saveServiceTest;
-
-	@Autowired
-	ElectionsRepository electionsRepository;
-
 	@Bean
 	TelegramBotsApi getTelegramBotsApi() {
 		return new TelegramBotsApi();
@@ -45,13 +39,12 @@ public class PoliticPrBotApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		try {
 			getTelegramBotsApi().registerBot(botController);
 		} catch (TelegramApiRequestException e) {
 			e.printStackTrace();
 		}
-		System.out.println(electionsRepository.findElectionsEntityByKeyword("ШИЯ", "2020"));
 	}
 
 	@PostConstruct

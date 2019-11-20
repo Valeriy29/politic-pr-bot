@@ -9,6 +9,7 @@ import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -32,10 +33,10 @@ public class BotController extends TelegramLongPollingBot {
     @Autowired
     private UserMessageService userMessageService;
 
+
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
-        //update.getMessage().
 
         if (!userService.userExists(update)) {
             userService.registrationUser(update);
@@ -44,6 +45,12 @@ public class BotController extends TelegramLongPollingBot {
         UserEntity userEntity = userService.findUserEntityByTelegramId(message.getFrom().getId());
 
 
+        if (message.hasDocument() && userEntity.getSendDoc()) {
+            userEntity.setSendDoc(false);
+            userService.saveUser(userEntity);
+            executeDocument(userMessageService.sendDocumentToAdmin(message, userEntity));
+            executeMessage(messageService.sendMsg(message, DOCUMENT_ACCEPT.getBotMessage()));
+        }
 
         if (message.hasText()) {
 
@@ -69,6 +76,12 @@ public class BotController extends TelegramLongPollingBot {
                 userEntity.setSection(BRAND.getAnswer());
                 userService.saveUser(userEntity);
                 executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, ALL_RUSSIAN_POPULARITY.getBotMessage()));
+            }
+
+            if (message.getText().equals(SEND_IDEA.getAnswer())) {
+                userEntity.setSendDoc(true);
+                userService.saveUser(userEntity);
+                executeMessage(messageService.sendMsg(message, SEND_DOCUMENT.getBotMessage() + EMAIL.getBotMessage()));
             }
 
             if (message.getText().equals(HAVE_IDEA.getAnswer())) {
@@ -146,14 +159,14 @@ public class BotController extends TelegramLongPollingBot {
             if (message.getText().matches(PHONE_REGEX.getAnswer()) && !Answer.getAllAnswers().contains(message.getText()) && userEntity.getInputPhone()) {
                 userEntity.setInputPhone(false);
                 userService.saveUser(userEntity);
-                String result = userMessageService.createMsgToAdmin(message.getText(), userEntity);
+                String result = userMessageService.createMsgToAdmin(message.getText(), userEntity, userMessageService::buildPhoneString);
                 executeMessage(messageService.sendMsg(message, result));
             }
 
-            if(userEntity.getInputDescription() && !Answer.getAllAnswers().contains(message.getText())) {
+            if (userEntity.getInputDescription() && !Answer.getAllAnswers().contains(message.getText())) {
                 userEntity.setInputDescription(false);
                 userService.saveUser(userEntity);
-                String result = userMessageService.createMsgToAdmin(message.getText(), userEntity);
+                String result = userMessageService.createMsgToAdmin(message.getText(), userEntity, userMessageService::buildPhoneString);
                 executeMessage(messageService.sendMsg(message, result));
             }
 
@@ -167,6 +180,15 @@ public class BotController extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
+
+    private void executeDocument(SendDocument sendDocument) {
+        try {
+            execute(sendDocument);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public String getBotUsername() {

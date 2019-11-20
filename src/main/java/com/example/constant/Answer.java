@@ -26,7 +26,7 @@ public enum Answer {
     ELECTIONS_PRICE("Узнать среднюю стоимость по выборам"),
     ELECTIONS_COUNTRY("Посмотреть, где еще проходят в стране выборы"),
     REGION_NAME_REGEX("^[?!,.а-яА-ЯёЁ\\s]+$"),
-    PHONE_REGEX("^[-_,.+0-9\\s]+$");
+    PHONE_REGEX("^[-)(_,.+0-9\\s]+$");
 
     private String answer;
 
