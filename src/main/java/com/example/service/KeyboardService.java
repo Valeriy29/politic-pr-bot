@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.constant.Admin;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.example.constant.Admin.*;
 import static com.example.constant.Answer.*;
 
 @Service
@@ -24,6 +26,17 @@ public class KeyboardService {
         KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton(LOBBY.getAnswer()));
         List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow));
+        return initReplyKeyboard(keyboardRowList, sendMessage);
+    }
+
+    public ReplyKeyboardMarkup setButtonsStartAdmin(SendMessage sendMessage) {
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton(SERVE.getAnswer()));
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add(new KeyboardButton(LOBBY.getAnswer()));
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
+        keyboardThirdRow.add(new KeyboardButton(SEND_MESSAGE.getAnswer()));
+        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow));
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
 

@@ -25,6 +25,7 @@ public enum Answer {
     DISMISS_DEPUTY("Хочу уволить чиновника или отозвать депутата"),
     ELECTIONS_PRICE("Узнать среднюю стоимость по выборам"),
     ELECTIONS_COUNTRY("Посмотреть, где еще проходят в стране выборы"),
+    SEND_MESSAGE("Отправить сообщение всем"),
     REGION_NAME_REGEX("^[?!,.а-яА-ЯёЁ\\s]+$"),
     PHONE_REGEX("^[-)(_,.+0-9\\s]+$");
 
@@ -46,7 +47,5 @@ public enum Answer {
     public static List<String> getAllAnswers() {
         return Arrays.stream(Answer.values()).map(Answer::getAnswer).collect(Collectors.toList());
     }
-
-
 
 }

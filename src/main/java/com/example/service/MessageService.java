@@ -16,6 +16,10 @@ public class MessageService {
     public SendMessage getStartMenu(Message message, String text) {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsStart);
     }
+    
+    public SendMessage getStartMenuAdmin(Message message, String text) {
+        return sendMsgKeyboard(message, text, keyboardService::setButtonsStartAdmin);
+    }
 
     public SendMessage getStartServeMenu(Message message, String text) {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsToServeStart);

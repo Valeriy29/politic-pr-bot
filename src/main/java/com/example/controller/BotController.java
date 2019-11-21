@@ -11,10 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import static com.example.constant.Admin.*;
 import static com.example.constant.Answer.*;
 import static com.example.constant.BotMessage.*;
 
@@ -33,6 +35,10 @@ public class BotController extends TelegramLongPollingBot {
     @Autowired
     private UserMessageService userMessageService;
 
+    private boolean isAdminSend = false;
+
+    private static final String ADMIN_ID = "370678219";
+//    private static final String ADMIN_ID = "0202020202";
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -52,10 +58,40 @@ public class BotController extends TelegramLongPollingBot {
             executeMessage(messageService.sendMsg(message, DOCUMENT_ACCEPT.getBotMessage()));
         }
 
+        if (isAdminSend) {
+            isAdminSend = false;
+            if (message.hasPhoto()) {
+                System.out.println();
+               Runnable thread = new Runnable() {
+                   @Override
+                   public void run() {
+                       userMessageService.sendAdminsPhoto(message, BotController.this::executePhoto);
+                   }
+               };
+               thread.run();
+            }
+
+            if (message.hasText()) {
+               userMessageService.sendAdminsMessage(message.getText()).start();
+            }
+        }
+
         if (message.hasText()) {
 
-            if (message.getText().equals(START.getAnswer())) {
-                executeMessage(messageService.getStartMenu(message, WELCOME.getBotMessage()));
+            //check admin
+            if (!userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_ID))) {
+                if (message.getText().equals(START.getAnswer())) {
+                    executeMessage(messageService.getStartMenu(message, WELCOME.getBotMessage()));
+                }
+            } else {
+                if (message.getText().equals(START.getAnswer())) {
+                    executeMessage(messageService.getStartMenuAdmin(message, WELCOME.getBotMessage()));
+                }
+            }
+
+            if (message.getText().equals(SEND_MESSAGE.getAnswer()) && userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_ID))) {
+                isAdminSend = true;
+                executeMessage(messageService.sendMsg(message, LOAD.getMessage()));
             }
 
             if (message.getText().equals(SERVE.getAnswer())) {
@@ -145,9 +181,14 @@ public class BotController extends TelegramLongPollingBot {
             }
 //---------------------
 
-
-            if (message.getText().equals(VIEW_OTHERS.getAnswer())) {
-                executeMessage(messageService.getStartMenu(message, SELECT_POINT.getBotMessage()));
+            if (!userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_ID))) {
+                if (message.getText().equals(VIEW_OTHERS.getAnswer())) {
+                    executeMessage(messageService.getStartMenu(message, SELECT_POINT.getBotMessage()));
+                }
+            } else {
+                if (message.getText().equals(VIEW_OTHERS.getAnswer())) {
+                    executeMessage(messageService.getStartMenuAdmin(message, SELECT_POINT.getBotMessage()));
+                }
             }
 
             if (message.getText().equals(CALL.getAnswer())) {
@@ -176,6 +217,14 @@ public class BotController extends TelegramLongPollingBot {
     private void executeMessage(SendMessage sendMessage) {
         try {
             execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void executePhoto(SendPhoto sendPhoto) {
+        try {
+            execute(sendPhoto);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,18 @@
 package com.example.migration;
 
 import com.example.entity.ElectionsEntity;
+import com.example.repository.ElectionsRepository;
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ElectionsMigration {
+
+    @Autowired
+    private ElectionsRepository electionsRepository;
 
     public static List<ElectionsEntity> loadElections() {
         return Lists.newArrayList(
@@ -61,6 +68,10 @@ public class ElectionsMigration {
           new ElectionsEntity(null, "Республика Дагестан", "Махачкала", "Дагестан", "Муниципальные выборы в Махачкале", "2020"),
           new ElectionsEntity(null, "Самарская область", "Самара", "Самара", "Муниципальные выборы в Самаре", "2020")
         );
+    }
+
+    public void saveAll() {
+        loadElections().forEach(electionsEntity -> electionsRepository.save(electionsEntity));
     }
 
 }
