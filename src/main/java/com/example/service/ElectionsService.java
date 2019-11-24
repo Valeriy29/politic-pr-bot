@@ -1,15 +1,11 @@
 package com.example.service;
 
-import com.example.constant.Answer;
-import com.example.constant.BotMessage;
 import com.example.entity.ElectionsEntity;
 import com.example.repository.ElectionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 

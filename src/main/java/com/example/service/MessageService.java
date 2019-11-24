@@ -45,6 +45,9 @@ public class MessageService {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsElectionsInfo);
     }
 
+    public SendMessage getPoliticPartyMenu(Message message, String text) {
+        return sendMsgKeyboard(message, text, keyboardService::setButtonsBuiltParty);
+    }
 
     public SendMessage sendMsg(Message message, String text) {
         SendMessage sendMessage = new SendMessage();

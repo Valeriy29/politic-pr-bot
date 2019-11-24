@@ -12,22 +12,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Document;
-import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
+
+import static com.example.constant.Admin.*;
 
 @Service
 public class UserMessageService {
@@ -42,23 +40,20 @@ public class UserMessageService {
     private RestTemplate restTemplate;
 
     private static final String ORDER_CALL = "Заказ звонка из рубрики ";
+    private static final String MESSAGE = "Сообщение из рубрики ";
     private static final String PHONE = ". Телефон: ";
     private static final String ERROR = "Сообщение не было отправлено";
     private static final String IDEA = "Идея от пользователя ";
     private static final String ID = "ID ";
     private static final String SUCCESS = "Сообщение  отправлено";
-    private static final String ADMIN_TELEGRAM_ID = "370678219";
-    private static final String BASIC_URL = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
-    private static final String TOKEN = "842868136:AAE3lu7F7gxNBCa_5OyuHmuIzvOYTFlKrRo";
 
     public ProcessSendingMsg sendAdminsMessage(String text) {
         return new ProcessSendingMsg(text, userRepository, restTemplate);
     }
 
-
     public SendDocument sendDocumentToAdmin(Message message, UserEntity userEntity) {
         Document d = message.getDocument();
-        SendDocument send = new SendDocument().setChatId(ADMIN_TELEGRAM_ID);
+        SendDocument send = new SendDocument().setChatId(ADMIN_TELEGRAM_ID.getConstant());
         send.setDocument(d.getFileName());
         send.setDocument(d.getFileId());
         send.setCaption(createMsgToAdmin("", userEntity, this::buildDocString));
@@ -88,13 +83,13 @@ public class UserMessageService {
     }
 
     public String buildPhoneString(String s, UserEntity userEntity) {
-        if (s.matches(Answer.PHONE_REGEX.getAnswer())) {
             userEntity.setPhoneNumber(s);
             userRepository.save(userEntity);
-            return ORDER_CALL + userEntity.getSection() + PHONE + s;
-        } else {
-            return ORDER_CALL + userEntity.getSection() + "\n" + s;
-        }
+            return ORDER_CALL + userEntity.getSection();
+    }
+
+    public String buildMessageString(String s, UserEntity userEntity) {
+        return MESSAGE + userEntity.getSection();
     }
 
     private String buildUserMessage(String text, UserEntity userEntity, BiFunction<String, UserEntity, String> fun) {
@@ -113,13 +108,20 @@ public class UserMessageService {
     }
 
     private String sendMessageToAdmin(String text) {
-        String url = String.format(BASIC_URL, TOKEN, ADMIN_TELEGRAM_ID, text);
+        String url = String.format(BASIC_URL.getConstant(), TOKEN.getConstant(), ADMIN_TELEGRAM_ID.getConstant(), text);
         try {
             restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class).getBody();
             return SUCCESS;
         } catch (HttpClientErrorException | ResourceAccessException e) {
             return ERROR;
         }
+    }
+
+    public ForwardMessage forwardMessageToAdmin(Message message) {
+        ForwardMessage forwardMessage = new ForwardMessage().setChatId(ADMIN_TELEGRAM_ID.getConstant());
+        forwardMessage.setFromChatId(message.getChatId());
+        forwardMessage.setMessageId(message.getMessageId());
+        return forwardMessage;
     }
 
     public static class ProcessSendingMsg extends Thread {
@@ -137,7 +139,7 @@ public class UserMessageService {
         public void run() {
             List<Integer> ids = userRepository.getAllTelegramIds();
             ids.forEach(id -> {
-                String url = String.format(BASIC_URL, TOKEN, id, text);
+                String url = String.format(BASIC_URL.getConstant(), TOKEN.getConstant(), id, text);
                 try {
                     restTemplate.exchange(url, HttpMethod.POST, HttpEntity.EMPTY, String.class).getBody();
                     System.out.println("sent");

@@ -2,18 +2,17 @@ package com.example;
 
 import com.example.controller.BotController;
 import com.example.migration.ElectionsMigration;
-import com.example.repository.ElectionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
-import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 public class PoliticPrBotApplication implements CommandLineRunner {
@@ -26,7 +25,7 @@ public class PoliticPrBotApplication implements CommandLineRunner {
 	private BotController botController;
 
 	@Autowired
-	private ElectionsMigration electionsMigration;
+    private ElectionsMigration electionsMigration;
 
 	@Bean
 	TelegramBotsApi getTelegramBotsApi() {
@@ -49,7 +48,7 @@ public class PoliticPrBotApplication implements CommandLineRunner {
 		} catch (TelegramApiRequestException e) {
 			e.printStackTrace();
 		}
-		electionsMigration.saveAll();
+		//electionsMigration.saveAll();
 	}
 
 }

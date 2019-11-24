@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.constant.Admin;
 import com.example.constant.Answer;
 import com.example.entity.UserEntity;
 import com.example.service.ElectionsService;
@@ -7,14 +8,18 @@ import com.example.service.MessageService;
 import com.example.service.UserMessageService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.Scanner;
 
 import static com.example.constant.Admin.*;
 import static com.example.constant.Answer.*;
@@ -36,9 +41,6 @@ public class BotController extends TelegramLongPollingBot {
     private UserMessageService userMessageService;
 
     private boolean isAdminSend = false;
-
-    private static final String ADMIN_ID = "370678219";
-//    private static final String ADMIN_ID = "0202020202";
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -62,24 +64,24 @@ public class BotController extends TelegramLongPollingBot {
             isAdminSend = false;
             if (message.hasPhoto()) {
                 System.out.println();
-               Runnable thread = new Runnable() {
-                   @Override
-                   public void run() {
-                       userMessageService.sendAdminsPhoto(message, BotController.this::executePhoto);
-                   }
-               };
-               thread.run();
+                Runnable thread = new Runnable() {
+                    @Override
+                    public void run() {
+                        userMessageService.sendAdminsPhoto(message, BotController.this::executePhoto);
+                    }
+                };
+                thread.run();
             }
 
             if (message.hasText()) {
-               userMessageService.sendAdminsMessage(message.getText()).start();
+                userMessageService.sendAdminsMessage(message.getText()).start();
             }
         }
 
         if (message.hasText()) {
 
             //check admin
-            if (!userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_ID))) {
+            if (!userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_TELEGRAM_ID.getConstant()))) {
                 if (message.getText().equals(START.getAnswer())) {
                     executeMessage(messageService.getStartMenu(message, WELCOME.getBotMessage()));
                 }
@@ -89,9 +91,9 @@ public class BotController extends TelegramLongPollingBot {
                 }
             }
 
-            if (message.getText().equals(SEND_MESSAGE.getAnswer()) && userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_ID))) {
+            if (message.getText().equals(SEND_MESSAGE.getAnswer()) && userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_TELEGRAM_ID.getConstant()))) {
                 isAdminSend = true;
-                executeMessage(messageService.sendMsg(message, LOAD.getMessage()));
+                executeMessage(messageService.sendMsg(message, LOAD.getBotMessage()));
             }
 
             if (message.getText().equals(SERVE.getAnswer())) {
@@ -100,6 +102,10 @@ public class BotController extends TelegramLongPollingBot {
 
             if (message.getText().equals(LOBBY.getAnswer())) {
                 executeMessage(messageService.getLobbyMenu(message, HELP_GOAL.getBotMessage()));
+            }
+
+            if (message.getText().equals(BUILT_PARTY.getAnswer())) {
+                executeMessage(messageService.getPoliticPartyMenu(message, POLITIC_PARTY.getBotMessage()));
             }
 
             if (message.getText().equals(PREPARE_WAY.getAnswer())) {
@@ -117,7 +123,7 @@ public class BotController extends TelegramLongPollingBot {
             if (message.getText().equals(SEND_IDEA.getAnswer())) {
                 userEntity.setSendDoc(true);
                 userService.saveUser(userEntity);
-                executeMessage(messageService.sendMsg(message, SEND_DOCUMENT.getBotMessage() + EMAIL.getBotMessage()));
+                executeMessage(messageService.sendMsg(message, SEND_DOCUMENT.getBotMessage() + EMAIL.getConstant()));
             }
 
             if (message.getText().equals(HAVE_IDEA.getAnswer())) {
@@ -143,6 +149,12 @@ public class BotController extends TelegramLongPollingBot {
 
             if (message.getText().equals(ELECTIONS_PRICE.getAnswer())) {
                 executeMessage(messageService.sendMsg(message, INFO_ABOUT_ELECTIONS_PRICE.getBotMessage()));
+            }
+//-------------------
+            if (message.getText().equals(REG_PARTY.getAnswer())) {
+                userEntity.setSection(REG_PARTY.getAnswer());
+                userService.saveUser(userEntity);
+                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
             }
 //-------------------
             if (message.getText().equals(GOOD_CONTACT.getAnswer())) {
@@ -181,7 +193,7 @@ public class BotController extends TelegramLongPollingBot {
             }
 //---------------------
 
-            if (!userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_ID))) {
+            if (!userEntity.getTelegramId().equals(Integer.valueOf(ADMIN_TELEGRAM_ID.getConstant()))) {
                 if (message.getText().equals(VIEW_OTHERS.getAnswer())) {
                     executeMessage(messageService.getStartMenu(message, SELECT_POINT.getBotMessage()));
                 }
@@ -202,15 +214,25 @@ public class BotController extends TelegramLongPollingBot {
                 userService.saveUser(userEntity);
                 String result = userMessageService.createMsgToAdmin(message.getText(), userEntity, userMessageService::buildPhoneString);
                 executeMessage(messageService.sendMsg(message, result));
+                executeForwardMessage(userMessageService.forwardMessageToAdmin(message));
             }
 
             if (userEntity.getInputDescription() && !Answer.getAllAnswers().contains(message.getText())) {
                 userEntity.setInputDescription(false);
                 userService.saveUser(userEntity);
-                String result = userMessageService.createMsgToAdmin(message.getText(), userEntity, userMessageService::buildPhoneString);
+                String result = userMessageService.createMsgToAdmin(message.getText(), userEntity, userMessageService::buildMessageString);
                 executeMessage(messageService.sendMsg(message, result));
+                executeForwardMessage(userMessageService.forwardMessageToAdmin(message));
             }
 
+        }
+    }
+
+    private void executeForwardMessage(ForwardMessage forwardMessage) {
+        try {
+            execute(forwardMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 
@@ -241,12 +263,12 @@ public class BotController extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "politic_pr_bot";
+        return BOT_NAME.getConstant();
     }
 
     @Override
     public String getBotToken() {
-        return "842868136:AAE3lu7F7gxNBCa_5OyuHmuIzvOYTFlKrRo";
+        return TOKEN.getConstant();
     }
 
 }
