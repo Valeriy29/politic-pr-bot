@@ -108,6 +108,14 @@ public class BotController extends TelegramLongPollingBot {
                 executeMessage(messageService.getPoliticPartyMenu(message, POLITIC_PARTY.getBotMessage()));
             }
 
+            if (message.getText().equals(KNOW.getAnswer())) {
+                executeMessage(messageService.sendMsg(message, MY_CREATOR.getBotMessage()));
+            }
+
+            if (message.getText().equals(STUDY.getAnswer())) {
+                executeMessage(messageService.getStudyMenu(message, MASTER_CLASS.getBotMessage()));
+            }
+
             if (message.getText().equals(PREPARE_WAY.getAnswer())) {
                 userEntity.setSection(PREPARE_WAY.getAnswer());
                 userService.saveUser(userEntity);
@@ -151,8 +159,52 @@ public class BotController extends TelegramLongPollingBot {
                 executeMessage(messageService.sendMsg(message, INFO_ABOUT_ELECTIONS_PRICE.getBotMessage()));
             }
 //-------------------
+            if (message.getText().equals(ORDER.getAnswer())) {
+                userEntity.setInputPhone(true);
+                userService.saveUser(userEntity);
+                executeMessage(messageService.sendMsg(message, INPUT_PHONE.getBotMessage()));
+            }
+
+            if (message.getText().equals(MASTER.getAnswer())) {
+                userEntity.setSection(MASTER.getAnswer());
+                userEntity.setInputDescription(true);
+                userService.saveUser(userEntity);
+                executeMessage(messageService.sendMsg(message, SOON.getBotMessage()));
+                executeForwardMessage(userMessageService.forwardMessageToAdmin(message));
+            }
+//-------------------
             if (message.getText().equals(REG_PARTY.getAnswer())) {
                 userEntity.setSection(REG_PARTY.getAnswer());
+                userService.saveUser(userEntity);
+                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+            }
+
+            if (message.getText().equals(CREATE_PROGRAM.getAnswer())) {
+                userEntity.setSection(CREATE_PROGRAM.getAnswer());
+                userService.saveUser(userEntity);
+                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+            }
+
+            if (message.getText().equals(SUPPORTERS.getAnswer())) {
+                userEntity.setSection(SUPPORTERS.getAnswer());
+                userService.saveUser(userEntity);
+                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+            }
+
+            if (message.getText().equals(INCREASE_MEMBERSHIP.getAnswer())) {
+                userEntity.setSection(INCREASE_MEMBERSHIP.getAnswer());
+                userService.saveUser(userEntity);
+                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+            }
+
+            if (message.getText().equals(STATE_DUMA.getAnswer())) {
+                userEntity.setSection(STATE_DUMA.getAnswer());
+                userService.saveUser(userEntity);
+                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+            }
+
+            if (message.getText().equals(FIND_FINANCING.getAnswer())) {
+                userEntity.setSection(FIND_FINANCING.getAnswer());
                 userService.saveUser(userEntity);
                 executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
             }

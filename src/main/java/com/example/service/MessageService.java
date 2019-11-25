@@ -29,6 +29,10 @@ public class MessageService {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsServePreparingPoliticAndBrand);
     }
 
+    public SendMessage getStudyMenu(Message message, String text) {
+        return sendMsgKeyboard(message, text, keyboardService::setButtonsStudy);
+    }
+
     public SendMessage getMainIdeaMenu(Message message, String text) {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsMainIdea);
     }

@@ -41,7 +41,7 @@ public class UserMessageService {
 
     private static final String ORDER_CALL = "Заказ звонка из рубрики ";
     private static final String MESSAGE = "Сообщение из рубрики ";
-    private static final String PHONE = ". Телефон: ";
+    private static final String PHONE = " Телефон: ";
     private static final String ERROR = "Сообщение не было отправлено";
     private static final String IDEA = "Идея от пользователя ";
     private static final String ID = "ID ";
@@ -76,7 +76,6 @@ public class UserMessageService {
             }
         });
     }
-
 
     public String createMsgToAdmin(String text, UserEntity userEntity, BiFunction<String, UserEntity, String> fun) {
         return sendMessageToAdmin(buildUserMessage(text, userEntity, fun));

@@ -107,6 +107,17 @@ public class KeyboardService {
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
 
+    public ReplyKeyboardMarkup setButtonsStudy(SendMessage sendMessage) {
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton(ORDER.getAnswer()));
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add(new KeyboardButton(MASTER.getAnswer()));
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
+        keyboardThirdRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
+        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow));
+        return initReplyKeyboard(keyboardRowList, sendMessage);
+    }
+
     public ReplyKeyboardMarkup setButtonsRegion(SendMessage sendMessage) {
         KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
