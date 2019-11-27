@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.constant.Admin;
 import com.example.constant.Answer;
 import com.example.entity.UserEntity;
 import com.example.service.ElectionsService;
@@ -8,7 +7,6 @@ import com.example.service.MessageService;
 import com.example.service.UserMessageService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
@@ -18,8 +16,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.util.Scanner;
 
 import static com.example.constant.Admin.*;
 import static com.example.constant.Answer.*;
@@ -160,6 +156,7 @@ public class BotController extends TelegramLongPollingBot {
             }
 //-------------------
             if (message.getText().equals(ORDER.getAnswer())) {
+                userEntity.setSection(ORDER.getAnswer() + MASTER.getAnswer());
                 userEntity.setInputPhone(true);
                 userService.saveUser(userEntity);
                 executeMessage(messageService.sendMsg(message, INPUT_PHONE.getBotMessage()));
@@ -167,7 +164,6 @@ public class BotController extends TelegramLongPollingBot {
 
             if (message.getText().equals(MASTER.getAnswer())) {
                 userEntity.setSection(MASTER.getAnswer());
-                userEntity.setInputDescription(true);
                 userService.saveUser(userEntity);
                 executeMessage(messageService.sendMsg(message, SOON.getBotMessage()));
                 executeForwardMessage(userMessageService.forwardMessageToAdmin(message));

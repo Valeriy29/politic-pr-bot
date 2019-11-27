@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.constant.BotMessage.*;
+import static com.example.service.KeyboardService.emoji;
 
 @Service
 public class ElectionsService {
@@ -24,7 +25,7 @@ public class ElectionsService {
 
         if (regionsList.size() != 0) {
             StringBuilder sb = new StringBuilder();
-            regionsList.forEach(r -> sb.append(r).append("\n").append("\n"));
+            regionsList.forEach(r -> sb.append(emoji(":white_check_mark:")).append(" ").append(r).append("\n").append("\n"));
             return REGION_ELECTIONS_P1.getBotMessage() + " " + year + " " + REGION_ELECTIONS_P2.getBotMessage() + "\n" + sb.toString() + DECIDED_GO.getBotMessage();
         } else {
             return OTHER_REGION_ELECTIONS_2020.getBotMessage();

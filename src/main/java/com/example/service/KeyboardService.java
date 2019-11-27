@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.google.common.collect.Lists;
+import com.vdurmont.emoji.EmojiParser;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -17,6 +18,10 @@ import static com.example.constant.Answer.*;
 public class KeyboardService {
 
     private final static ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+
+    public static String emoji(String emoji) {
+        return EmojiParser.parseToUnicode(emoji);
+    }
 
     public ReplyKeyboardMarkup setButtonsStart(SendMessage sendMessage) {
         KeyboardRow keyboardFirstRow = new KeyboardRow();
