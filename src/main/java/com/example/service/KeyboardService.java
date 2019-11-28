@@ -96,7 +96,16 @@ public class KeyboardService {
         KeyboardRow keyboardFirstRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton(CALL.getAnswer()));
         KeyboardRow keyboardSecondRow = new KeyboardRow();
-        keyboardSecondRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
+        keyboardSecondRow.add(new KeyboardButton(BACK_SERVE_MENU.getAnswer()));
+        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow));
+        return initReplyKeyboard(keyboardRowList, sendMessage);
+    }
+
+    public ReplyKeyboardMarkup setButtonsCallInBuiltMenu(SendMessage sendMessage) {
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton(CALL.getAnswer()));
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add(new KeyboardButton(BACK_BUILT_PARTY__MENU.getAnswer()));
         List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow));
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
@@ -107,7 +116,7 @@ public class KeyboardService {
         KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton(HAVE_MONEY_IDEA.getAnswer()));
         KeyboardRow keyboardThirdRow = new KeyboardRow();
-        keyboardThirdRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
+        keyboardThirdRow.add(new KeyboardButton(BACK_SERVE_MENU.getAnswer()));
         List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow));
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
@@ -125,7 +134,7 @@ public class KeyboardService {
 
     public ReplyKeyboardMarkup setButtonsRegion(SendMessage sendMessage) {
         KeyboardRow keyboardSecondRow = new KeyboardRow();
-        keyboardSecondRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
+        keyboardSecondRow.add(new KeyboardButton(BACK_SERVE_MENU.getAnswer()));
         List<KeyboardRow> keyboardRowList = Collections.singletonList(keyboardSecondRow);
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }

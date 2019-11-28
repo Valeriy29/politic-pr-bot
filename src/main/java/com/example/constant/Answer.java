@@ -21,7 +21,7 @@ public enum Answer {
     INCREASE_MEMBERSHIP(emoji(":chart_with_upwards_trend:") + " " + "Увеличить число членов партии"),
     STATE_DUMA(emoji(":office:") + " " + "Пройти в Государственную Думу"),
     FIND_FINANCING(emoji(":moneybag:") + " " + "Найти финансирование"),
-    KNOW(emoji(":dart:") + " " + "Познакомиться с твоим создателем"),
+    KNOW(emoji(":dart:") + " " + "Познакомиться с моим создателем"),
     STUDY(emoji(":dart:") + " " + "Пройти обучение"),
     ORDER(emoji(":page_with_curl:") + " " + "Оставить заявку"),
     MASTER(emoji(":muscle:") + "Посетить мастер класс"),
@@ -42,6 +42,8 @@ public enum Answer {
     ELECTIONS_PRICE(emoji(":dollar:") + " " + "Узнать среднюю стоимость по выборам"),
     ELECTIONS_COUNTRY(emoji(":ru:") + " " + "Посмотреть, где еще проходят в стране выборы"),
     SEND_MESSAGE(emoji(":email:") + " " + "Отправить сообщение всем"),
+    BACK_SERVE_MENU(emoji(":arrow_left:") + " " + "Назад в меню \"Служить своему народу\""),
+    BACK_BUILT_PARTY__MENU(emoji(":arrow_left:") + " " + "Назад в меню \"Построить политическую партию\""),
     REGION_NAME_REGEX("^[?!,.а-яА-ЯёЁ\\s]+$"),
     PHONE_REGEX("^[-)(_,.+0-9\\s]+$");
 

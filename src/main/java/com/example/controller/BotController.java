@@ -172,37 +172,37 @@ public class BotController extends TelegramLongPollingBot {
             if (message.getText().equals(REG_PARTY.getAnswer())) {
                 userEntity.setSection(REG_PARTY.getAnswer());
                 userService.saveUser(userEntity);
-                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+                executeMessage(messageService.getCallInBuiltMenuMenu(message, SERIOUS_QUESTION.getBotMessage()));
             }
 
             if (message.getText().equals(CREATE_PROGRAM.getAnswer())) {
                 userEntity.setSection(CREATE_PROGRAM.getAnswer());
                 userService.saveUser(userEntity);
-                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+                executeMessage(messageService.getCallInBuiltMenuMenu(message, SERIOUS_QUESTION.getBotMessage()));
             }
 
             if (message.getText().equals(SUPPORTERS.getAnswer())) {
                 userEntity.setSection(SUPPORTERS.getAnswer());
                 userService.saveUser(userEntity);
-                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+                executeMessage(messageService.getCallInBuiltMenuMenu(message, SERIOUS_QUESTION.getBotMessage()));
             }
 
             if (message.getText().equals(INCREASE_MEMBERSHIP.getAnswer())) {
                 userEntity.setSection(INCREASE_MEMBERSHIP.getAnswer());
                 userService.saveUser(userEntity);
-                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+                executeMessage(messageService.getCallInBuiltMenuMenu(message, SERIOUS_QUESTION.getBotMessage()));
             }
 
             if (message.getText().equals(STATE_DUMA.getAnswer())) {
                 userEntity.setSection(STATE_DUMA.getAnswer());
                 userService.saveUser(userEntity);
-                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+                executeMessage(messageService.getCallInBuiltMenuMenu(message, SERIOUS_QUESTION.getBotMessage()));
             }
 
             if (message.getText().equals(FIND_FINANCING.getAnswer())) {
                 userEntity.setSection(FIND_FINANCING.getAnswer());
                 userService.saveUser(userEntity);
-                executeMessage(messageService.getServePreparingPoliticAndBrandMenu(message, SERIOUS_QUESTION.getBotMessage()));
+                executeMessage(messageService.getCallInBuiltMenuMenu(message, SERIOUS_QUESTION.getBotMessage()));
             }
 //-------------------
             if (message.getText().equals(GOOD_CONTACT.getAnswer())) {
@@ -249,6 +249,14 @@ public class BotController extends TelegramLongPollingBot {
                 if (message.getText().equals(VIEW_OTHERS.getAnswer())) {
                     executeMessage(messageService.getStartMenuAdmin(message, SELECT_POINT.getBotMessage()));
                 }
+            }
+
+            if(message.getText().equals(BACK_SERVE_MENU.getAnswer())) {
+                executeMessage(messageService.getStartServeMenu(message, SELECT_POINT.getBotMessage()));
+            }
+
+            if(message.getText().equals(BACK_BUILT_PARTY__MENU.getAnswer())) {
+                executeMessage(messageService.getPoliticPartyMenu(message, SELECT_POINT.getBotMessage()));
             }
 
             if (message.getText().equals(CALL.getAnswer())) {
