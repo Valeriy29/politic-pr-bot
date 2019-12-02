@@ -72,12 +72,12 @@ public class KeyboardService {
         keyboardFourthRow.add(new KeyboardButton(KNOW.getAnswer()));
         KeyboardRow keyboardFifthRow = new KeyboardRow();
         keyboardFifthRow.add(new KeyboardButton(STUDY.getAnswer()));
-        KeyboardRow keyboardSixthRow = new KeyboardRow();
-        keyboardSixthRow.add(new KeyboardButton(SEND_MESSAGE.getAnswer()));
         KeyboardRow keyboardSeventhRow = new KeyboardRow();
         keyboardSeventhRow.add(new KeyboardButton(HELP_PROJECT.getAnswer()));
+        KeyboardRow keyboardSixthRow = new KeyboardRow();
+        keyboardSixthRow.add(new KeyboardButton(SEND_MESSAGE.getAnswer()));
         List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow,
-                keyboardFourthRow, keyboardFifthRow, keyboardSixthRow, keyboardSeventhRow));
+                keyboardFourthRow, keyboardFifthRow, keyboardSeventhRow, keyboardSixthRow));
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
 

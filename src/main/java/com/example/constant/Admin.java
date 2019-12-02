@@ -2,8 +2,8 @@ package com.example.constant;
 
 public enum Admin {
 
-//    ADMIN_TELEGRAM_ID("726914119"),
-    ADMIN_TELEGRAM_ID("370678219"),
+    ADMIN_TELEGRAM_ID("726914119"),
+//    ADMIN_TELEGRAM_ID("370678219"),
     BASIC_URL("https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s"),
 //    TOKEN("842868136:AAE3lu7F7gxNBCa_5OyuHmuIzvOYTFlKrRo"),
 //    BOT_NAME("politic_pr_bot"),
