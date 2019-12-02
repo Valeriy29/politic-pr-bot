@@ -105,11 +105,15 @@ public class BotController extends TelegramLongPollingBot {
             }
 
             if (message.getText().equals(KNOW.getAnswer())) {
-                executeMessage(messageService.sendMsg(message, MY_CREATOR.getBotMessage()));
+                executeMessage(messageService.getOthers(message, MY_CREATOR.getBotMessage()));
             }
 
             if (message.getText().equals(STUDY.getAnswer())) {
                 executeMessage(messageService.getStudyMenu(message, MASTER_CLASS.getBotMessage()));
+            }
+
+            if (message.getText().equals(HELP_PROJECT.getAnswer())) {
+                executeMessage(messageService.getOthers(message, PAY_PAGE.getBotMessage()));
             }
 
             if (message.getText().equals(PREPARE_WAY.getAnswer())) {

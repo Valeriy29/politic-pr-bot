@@ -44,6 +44,7 @@ public enum Answer {
     SEND_MESSAGE(emoji(":email:") + " " + "Отправить сообщение всем"),
     BACK_SERVE_MENU(emoji(":arrow_left:") + " " + "Назад в меню \"Служить своему народу\""),
     BACK_BUILT_PARTY__MENU(emoji(":arrow_left:") + " " + "Назад в меню \"Построить политическую партию\""),
+    HELP_PROJECT((emoji(":dart:") + " " + "Помочь проекту")),
     REGION_NAME_REGEX("^[?!,.а-яА-ЯёЁ\\s]+$"),
     PHONE_REGEX("^[-)(_,.+0-9\\s]+$");
 

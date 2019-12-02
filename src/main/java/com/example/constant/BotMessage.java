@@ -19,6 +19,7 @@ public enum BotMessage {
     OTHER_REGION_ELECTIONS_2020("К сожалению на следующий год в твоей области выборов нет, но ты можешь принять участие в выборах в другом регионе"),
     DECIDED_GO("Если ты определился куда идём, жми:\n"),
     URL_RCCOMPANY("https://rccompany.ru/uiti-v-politiku/"),
+    PAY_PAGE("https://yasobe.ru/na/help\\_project\\_politic\\_bot"),
     YOUR_GOAL_DESCRIPTION("Опиши кратко суть твоей цели, и необходимый специалист с тобой свяжется.\n"),
     SOON("Через некоторое время мы обязательно с вами свяжемся\n"),
     INPUT_PHONE("Введи номер своего телефона:"),
