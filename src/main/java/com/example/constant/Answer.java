@@ -45,6 +45,9 @@ public enum Answer {
     BACK_SERVE_MENU(emoji(":arrow_left:") + " " + "Назад в меню \"Служить своему народу\""),
     BACK_BUILT_PARTY__MENU(emoji(":arrow_left:") + " " + "Назад в меню \"Построить политическую партию\""),
     HELP_PROJECT((emoji(":dart:") + " " + "Помочь проекту")),
+    BRIEFING((emoji(":heavy_exclamation_mark:") + " " + "Для начала ликбез")),
+    BRIEFING_LOBBY((emoji(":heavy_exclamation_mark:") + " " + "Немного ликбеза")),
+    BACK_TO_SPECIAL((emoji(":arrow_left:") + " " + "Назад к специалисту")),
     REGION_NAME_REGEX("^[?!,.а-яА-ЯёЁ\\s]+$"),
     PHONE_REGEX("^[-)(_,.+0-9\\s]+$");
 

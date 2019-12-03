@@ -56,7 +56,11 @@ public class BotController extends TelegramLongPollingBot {
             executeMessage(messageService.sendMsg(message, DOCUMENT_ACCEPT.getBotMessage()));
         }
 
-        if (isAdminSend) {
+        if (isAdminSend && Answer.getAllAnswers().contains(message.getText())) {
+            isAdminSend = false;
+        }
+
+        if (isAdminSend && !Answer.getAllAnswers().contains(message.getText())) {
             isAdminSend = false;
             if (message.hasPhoto()) {
                 System.out.println();
@@ -102,6 +106,14 @@ public class BotController extends TelegramLongPollingBot {
 
             if (message.getText().equals(BUILT_PARTY.getAnswer())) {
                 executeMessage(messageService.getPoliticPartyMenu(message, POLITIC_PARTY.getBotMessage()));
+            }
+
+            if (message.getText().equals(BRIEFING.getAnswer())) {
+                executeMessage(messageService.getSpecial(message, BRIEFING_MESSAGE.getBotMessage()));
+            }
+
+            if (message.getText().equals(BRIEFING_LOBBY.getAnswer())) {
+                executeMessage(messageService.getSpecial(message, BRIEFING_MESSAGE_LOBBY.getBotMessage()));
             }
 
             if (message.getText().equals(KNOW.getAnswer())) {
@@ -260,6 +272,10 @@ public class BotController extends TelegramLongPollingBot {
             }
 
             if(message.getText().equals(BACK_BUILT_PARTY__MENU.getAnswer())) {
+                executeMessage(messageService.getPoliticPartyMenu(message, SELECT_POINT.getBotMessage()));
+            }
+
+            if(message.getText().equals(BACK_TO_SPECIAL.getAnswer())) {
                 executeMessage(messageService.getPoliticPartyMenu(message, SELECT_POINT.getBotMessage()));
             }
 

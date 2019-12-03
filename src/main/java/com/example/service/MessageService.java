@@ -20,6 +20,10 @@ public class MessageService {
     public SendMessage getOthers(Message message, String text) {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsOthers);
     }
+
+    public SendMessage getSpecial(Message message, String text) {
+        return sendMsgKeyboard(message, text, keyboardService::setButtonsBackToSpecial);
+    }
     
     public SendMessage getStartMenuAdmin(Message message, String text) {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsStartAdmin);

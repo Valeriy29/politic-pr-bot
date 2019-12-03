@@ -42,6 +42,8 @@ public class KeyboardService {
     }
 
     public ReplyKeyboardMarkup setButtonsBuiltParty(SendMessage sendMessage) {
+        KeyboardRow keyboardZeroRow = new KeyboardRow();
+        keyboardZeroRow.add(new KeyboardButton(BRIEFING.getAnswer()));
         KeyboardRow keyboardFirstRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton(REG_PARTY.getAnswer()));
         KeyboardRow keyboardSecondRow = new KeyboardRow();
@@ -56,7 +58,7 @@ public class KeyboardService {
         keyboardSixthRow.add(new KeyboardButton(FIND_FINANCING.getAnswer()));
         KeyboardRow keyboardSeventhRow = new KeyboardRow();
         keyboardSeventhRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
-        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow, keyboardFourthRow, keyboardFifthRow,
+        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardZeroRow, keyboardFirstRow, keyboardSecondRow, keyboardThirdRow, keyboardFourthRow, keyboardFifthRow,
                 keyboardSixthRow, keyboardSeventhRow));
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
@@ -150,7 +152,16 @@ public class KeyboardService {
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
 
+    public ReplyKeyboardMarkup setButtonsBackToSpecial(SendMessage sendMessage) {
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add(new KeyboardButton(BACK_TO_SPECIAL.getAnswer()));
+        List<KeyboardRow> keyboardRowList = Collections.singletonList(keyboardSecondRow);
+        return initReplyKeyboard(keyboardRowList, sendMessage);
+    }
+
     public ReplyKeyboardMarkup setButtonsLobbyStart(SendMessage sendMessage) {
+        KeyboardRow keyboardZeroRow = new KeyboardRow();
+        keyboardZeroRow.add(new KeyboardButton(BRIEFING_LOBBY.getAnswer()));
         KeyboardRow keyboardFirstRow = new KeyboardRow();
         keyboardFirstRow.add(new KeyboardButton(GOOD_CONTACT.getAnswer()));
         KeyboardRow keyboardSecondRow = new KeyboardRow();
@@ -163,7 +174,7 @@ public class KeyboardService {
         keyboardFifthRow.add(new KeyboardButton(DISMISS_DEPUTY.getAnswer()));
         KeyboardRow keyboardSixthRow = new KeyboardRow();
         keyboardSixthRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
-        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow, keyboardFourthRow, keyboardFifthRow,
+        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardZeroRow, keyboardFirstRow, keyboardSecondRow, keyboardThirdRow, keyboardFourthRow, keyboardFifthRow,
                 keyboardSixthRow));
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
