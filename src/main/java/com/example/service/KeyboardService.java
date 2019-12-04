@@ -153,9 +153,11 @@ public class KeyboardService {
     }
 
     public ReplyKeyboardMarkup setButtonsBackToSpecial(SendMessage sendMessage) {
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton(SPECIAL.getAnswer()));
         KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add(new KeyboardButton(BACK_TO_SPECIAL.getAnswer()));
-        List<KeyboardRow> keyboardRowList = Collections.singletonList(keyboardSecondRow);
+        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow));
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
 

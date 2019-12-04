@@ -116,6 +116,14 @@ public class BotController extends TelegramLongPollingBot {
                 executeMessage(messageService.getSpecial(message, BRIEFING_MESSAGE_LOBBY.getBotMessage()));
             }
 
+            if (message.getText().equals(SPECIAL.getAnswer())) {
+//                userEntity.setSection(BRIEFING.getAnswer());
+//                userService.saveUser(userEntity);
+                String result = userMessageService.createMsgToAdmin(BRIEFING.getAnswer(), userEntity, userMessageService::buildMessageString);
+                executeMessage(messageService.sendMsg(message, result));
+                executeForwardMessage(userMessageService.forwardMessageToAdmin(message));
+            }
+
             if (message.getText().equals(KNOW.getAnswer())) {
                 executeMessage(messageService.getOthers(message, MY_CREATOR.getBotMessage()));
             }

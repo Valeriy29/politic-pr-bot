@@ -16,7 +16,6 @@ public enum Admin {
     YOU_TUBE("https://www.youtube.com/channel/UCCTRt3tWZL\\_7LSXwghXmfaQ?view\\_as=subscriber"),
     WEB_SITE("https://rccompany.ru");
 
-
     private String constant;
 
     Admin(String constant) {
