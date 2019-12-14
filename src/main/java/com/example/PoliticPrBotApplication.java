@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.controller.BotController;
+import com.example.migration.DocumentsLoad;
 import com.example.migration.ElectionsMigration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,6 +27,9 @@ public class PoliticPrBotApplication implements CommandLineRunner {
 	@Autowired
     private ElectionsMigration electionsMigration;
 
+	@Autowired
+	private DocumentsLoad documentsLoad;
+
 	@Bean
 	TelegramBotsApi getTelegramBotsApi() {
 		return new TelegramBotsApi();
@@ -47,7 +51,8 @@ public class PoliticPrBotApplication implements CommandLineRunner {
 		} catch (TelegramApiRequestException e) {
 			e.printStackTrace();
 		}
-		//electionsMigration.saveAll();
+		//electionsMigration.saveAll()
+		documentsLoad.saveAllDocuments();
 	}
 
 }

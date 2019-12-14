@@ -33,6 +33,10 @@ public class MessageService {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsToServeStart);
     }
 
+    public SendMessage getDocMenu(Message message, String text) {
+        return sendMsgKeyboard(message, text, keyboardService::setButtonsDoc);
+    }
+
     public SendMessage getServePreparingPoliticAndBrandMenu(Message message, String text) {
         return sendMsgKeyboard(message, text, keyboardService::setButtonsServePreparingPoliticAndBrand);
     }

@@ -1,6 +1,5 @@
 package com.example.service;
 
-import com.example.constant.Answer;
 import com.example.entity.UserEntity;
 import com.example.entity.UserMessageEntity;
 import com.example.repository.UserMessageRepository;

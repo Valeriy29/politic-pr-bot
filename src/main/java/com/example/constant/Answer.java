@@ -1,8 +1,5 @@
 package com.example.constant;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +46,9 @@ public enum Answer {
     BRIEFING_LOBBY(emoji(":heavy_exclamation_mark:") + " " + "Немного ликбеза"),
     BACK_TO_SPECIAL(emoji(":arrow_left:") + " " + "Назад к специалисту"),
     SPECIAL(emoji(":thought_balloon:") + " " + "Обратиться"),
+    DOC(emoji(":page_facing_up:") + " " + "Документы на выдвижение"),
+    DOC_PARLIAMENT(emoji(":page_facing_up:") + " " + "Выборы обласного совета депутатов"),
+    DOC_REG(emoji(":page_facing_up:") + " " + "Документы на выборы глав региона"),
     REGION_NAME_REGEX("^[?!,.а-яА-ЯёЁ\\s]+$"),
     PHONE_REGEX("^[-)(_,.+0-9\\s]+$");
 
@@ -68,17 +68,6 @@ public enum Answer {
 
     public static List<String> getAllAnswers() {
         return Arrays.stream(Answer.values()).map(Answer::getAnswer).collect(Collectors.toList());
-//                .map(answer -> {
-//            String[] answerArr = answer.split(" ");
-//            if (answerArr.length > 1) {
-//                StringBuilder sb = new StringBuilder();
-//                for (int i = 1; i < answerArr.length; i++) {
-//                    sb.append(answerArr[i]).append(" ");
-//                }
-//                return sb.toString().trim();
-//            }
-//            return answer;
-//        }).collect(Collectors.toList());
     }
 
 }

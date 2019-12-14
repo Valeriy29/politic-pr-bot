@@ -93,8 +93,21 @@ public class KeyboardService {
         KeyboardRow keyboardFourthRow = new KeyboardRow();
         keyboardFourthRow.add(new KeyboardButton(HAVE_MONEY.getAnswer()));
         KeyboardRow keyboardFifthRow = new KeyboardRow();
-        keyboardFifthRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
-        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow, keyboardFourthRow, keyboardFifthRow));
+        keyboardFifthRow.add(new KeyboardButton(DOC.getAnswer()));
+        KeyboardRow keyboardSixthRow = new KeyboardRow();
+        keyboardSixthRow.add(new KeyboardButton(VIEW_OTHERS.getAnswer()));
+        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow, keyboardFourthRow, keyboardFifthRow, keyboardSixthRow));
+        return initReplyKeyboard(keyboardRowList, sendMessage);
+    }
+
+    public ReplyKeyboardMarkup setButtonsDoc(SendMessage sendMessage) {
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add(new KeyboardButton(DOC_PARLIAMENT.getAnswer()));
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add(new KeyboardButton(DOC_REG.getAnswer()));
+        KeyboardRow keyboardThirdRow = new KeyboardRow();
+        keyboardThirdRow.add(new KeyboardButton(BACK_SERVE_MENU.getAnswer()));
+        List<KeyboardRow> keyboardRowList = new ArrayList<>(Lists.newArrayList(keyboardFirstRow, keyboardSecondRow, keyboardThirdRow));
         return initReplyKeyboard(keyboardRowList, sendMessage);
     }
 

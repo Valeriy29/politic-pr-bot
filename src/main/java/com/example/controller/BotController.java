@@ -2,10 +2,7 @@ package com.example.controller;
 
 import com.example.constant.Answer;
 import com.example.entity.UserEntity;
-import com.example.service.ElectionsService;
-import com.example.service.MessageService;
-import com.example.service.UserMessageService;
-import com.example.service.UserService;
+import com.example.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -20,6 +17,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import static com.example.constant.Admin.*;
 import static com.example.constant.Answer.*;
 import static com.example.constant.BotMessage.*;
+import static com.example.constant.DocumentType.*;
 
 @Controller
 public class BotController extends TelegramLongPollingBot {
@@ -35,6 +33,9 @@ public class BotController extends TelegramLongPollingBot {
 
     @Autowired
     private UserMessageService userMessageService;
+
+    @Autowired
+    private ElectionsDocService electionsDocService;
 
     private boolean isAdminSend = false;
 
@@ -117,8 +118,6 @@ public class BotController extends TelegramLongPollingBot {
             }
 
             if (message.getText().equals(SPECIAL.getAnswer())) {
-//                userEntity.setSection(BRIEFING.getAnswer());
-//                userService.saveUser(userEntity);
                 String result = userMessageService.createMsgToAdmin(BRIEFING.getAnswer(), userEntity, userMessageService::buildMessageString);
                 executeMessage(messageService.sendMsg(message, result));
                 executeForwardMessage(userMessageService.forwardMessageToAdmin(message));
@@ -163,6 +162,25 @@ public class BotController extends TelegramLongPollingBot {
                 userService.saveUser(userEntity);
                 executeMessage(messageService.getRegionMenu(message, BUSINESS_MAN_TALK.getBotMessage()));
             }
+
+            if(message.getText().equals(DOC.getAnswer())) {
+                executeMessage(messageService.getDocMenu(message, DOC_MSG.getBotMessage()));
+            }
+
+            if(message.getText().equals(DOC_PARLIAMENT.getAnswer())) {
+                executeMessage(messageService.getDocMenu(message, DOC_MSG_PARLIAMENT.getBotMessage()));
+                electionsDocService.getAllDocByType(PARLIAMENT_ELECTIONS.getDocType()).forEach(doc -> {
+                    executeMessage(messageService.getDocMenu(message, doc));
+                });
+            }
+
+            if(message.getText().equals(DOC_REG.getAnswer())) {
+                executeMessage(messageService.getDocMenu(message, DOC_MSG_REG.getBotMessage()));
+                electionsDocService.getAllDocByType(REGION_ELECTIONS.getDocType()).forEach(doc -> {
+                    executeMessage(messageService.getDocMenu(message, doc));
+                });
+            }
+
 
             if (message.getText().matches(REGION_NAME_REGEX.getAnswer()) && !Answer.getAllAnswers().contains(message.getText()) && userEntity.getAnsweredRegion()) {
                 userEntity.setAnsweredRegion(false);
