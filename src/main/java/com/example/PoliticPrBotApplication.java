@@ -52,7 +52,7 @@ public class PoliticPrBotApplication implements CommandLineRunner {
 			e.printStackTrace();
 		}
 		//electionsMigration.saveAll()
-		documentsLoad.saveAllDocuments();
+//		documentsLoad.saveAllDocuments();
 	}
 
 }
