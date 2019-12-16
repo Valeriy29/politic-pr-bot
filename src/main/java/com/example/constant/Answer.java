@@ -49,6 +49,8 @@ public enum Answer {
     DOC(emoji(":page_facing_up:") + " " + "Документы на выдвижение"),
     DOC_PARLIAMENT(emoji(":page_facing_up:") + " " + "Выборы обласного совета депутатов"),
     DOC_REG(emoji(":page_facing_up:") + " " + "Документы на выборы глав региона"),
+    DOC_BRIEF(emoji(":page_facing_up:") + " " + "Скачать Бриф для разработки проекта"),
+    DOC_COMMERCIAL(emoji(":page_facing_up:") + " " + "Скачать Коммерческое предложение с пакетами услуг"),
     REGION_NAME_REGEX("^[?!,.а-яА-ЯёЁ\\s]+$"),
     PHONE_REGEX("^[-)(_,.+0-9\\s]+$");
 

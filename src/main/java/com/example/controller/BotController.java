@@ -175,12 +175,25 @@ public class BotController extends TelegramLongPollingBot {
             }
 
             if(message.getText().equals(DOC_REG.getAnswer())) {
-                executeMessage(messageService.getDocMenu(message, DOC_MSG_REG.getBotMessage()));
+                executeMessage(messageService.getDocMenu(message, DOC_MSG_BRIEF.getBotMessage()));
                 electionsDocService.getAllDocByType(REGION_ELECTIONS.getDocType()).forEach(doc -> {
                     executeMessage(messageService.getDocMenu(message, doc));
                 });
             }
 
+            if(message.getText().equals(DOC_BRIEF.getAnswer())) {
+                executeMessage(messageService.sendMsg(message, DOC_MSG_COMMERCIAL.getBotMessage()));
+                electionsDocService.getAllDocByType(BRIEF.getDocType()).forEach(doc -> {
+                    executeMessage(messageService.sendMsg(message, doc));
+                });
+            }
+
+            if(message.getText().equals(DOC_COMMERCIAL.getAnswer())) {
+                executeMessage(messageService.sendMsg(message, DOC_MSG_REG.getBotMessage()));
+                electionsDocService.getAllDocByType(COMMERCIAL.getDocType()).forEach(doc -> {
+                    executeMessage(messageService.sendMsg(message, doc));
+                });
+            }
 
             if (message.getText().matches(REGION_NAME_REGEX.getAnswer()) && !Answer.getAllAnswers().contains(message.getText()) && userEntity.getAnsweredRegion()) {
                 userEntity.setAnsweredRegion(false);
